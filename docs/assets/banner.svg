@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title description">
+  <title id="title">E-COM_Store — a storefront out front, a workspace behind it</title>
+  <desc id="description">Lavender and navy project cover connecting the React storefront, staff and owner workspace, and FastAPI backend.</desc>
+  <rect width="1200" height="360" rx="22" fill="#f4f3fb"/>
+  <path d="M0 300H1200M740 0V360" stroke="#deddea"/>
+  <rect x="48" y="40" width="44" height="44" rx="12" fill="#5145cd"/>
+  <path d="M70 47C70 60 65 65 52 65C65 65 70 70 70 81C70 70 75 65 88 65C75 65 70 60 70 47Z" fill="white"/>
+  <text x="108" y="69" font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="600" fill="#242440">E-COM_Store</text>
+  <text x="48" y="151" font-family="Segoe UI,Arial,sans-serif" font-size="45" font-weight="600" letter-spacing="-1.5" fill="#242440">A storefront out front.</text>
+  <text x="48" y="208" font-family="Segoe UI,Arial,sans-serif" font-size="45" font-weight="600" letter-spacing="-1.5" fill="#242440">A workspace behind it.</text>
+  <text x="50" y="258" font-family="Segoe UI,Arial,sans-serif" font-size="17" fill="#625b78">Reusable commerce. One independent store at a time.</text>
+  <text x="50" y="336" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#5145cd">React storefront</text>
+  <circle cx="204" cy="330" r="3" fill="#b9b2d5"/>
+  <text x="225" y="336" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#5145cd">Staff + owner admin</text>
+  <circle cx="407" cy="330" r="3" fill="#b9b2d5"/>
+  <text x="428" y="336" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#5145cd">FastAPI backend</text>
+  <path d="M800 97H1134V255H800Z" fill="none" stroke="#c9c1e3" stroke-width="2" stroke-dasharray="5 6"/>
+  <rect x="787" y="45" width="360" height="72" rx="12" fill="white" stroke="#deddea"/>
+  <rect x="809" y="65" width="32" height="32" rx="8" fill="#eeeafb"/>
+  <path d="M819 77H832L834 88H817ZM822 77V74A3 3 0 0 1 828 74V77" fill="none" stroke="#5145cd" stroke-width="1.5"/>
+  <text x="857" y="78" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#242440">The storefront</text>
+  <text x="857" y="99" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#625b78">Discover · choose · order</text>
+  <rect x="787" y="137" width="360" height="72" rx="12" fill="white" stroke="#deddea"/>
+  <rect x="809" y="157" width="32" height="32" rx="8" fill="#eeeafb"/>
+  <path d="M817 166H833V180H817ZM822 166V180M817 171H833" fill="none" stroke="#5145cd" stroke-width="1.5"/>
+  <text x="857" y="170" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#242440">The workspace</text>
+  <text x="857" y="191" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#625b78">Catalog · stock · fulfillment</text>
+  <rect x="787" y="229" width="360" height="72" rx="12" fill="#242440"/>
+  <rect x="809" y="249" width="32" height="32" rx="8" fill="#403b64"/>
+  <path d="M822 256L816 264L822 272M829 256L835 264L829 272" fill="none" stroke="#ded7ff" stroke-width="1.5"/>
+  <text x="857" y="262" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="white">The API</text>
+  <text x="857" y="283" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#d0c9e5">Validated · versioned · payment-free</text>
+</svg>

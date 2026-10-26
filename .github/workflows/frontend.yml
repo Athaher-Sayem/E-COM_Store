@@ -2,9 +2,9 @@ name: Storefront checks
 
 on:
   push:
-    paths: ["frontend/**", "backend/**", "demo/**", ".github/workflows/frontend.yml"]
+    paths: ["frontend/**", "backend/**", "demo/**", "docs/feature-explorer*", "docs/assets/**", ".github/workflows/frontend.yml"]
   pull_request:
-    paths: ["frontend/**", "backend/**", "demo/**", ".github/workflows/frontend.yml"]
+    paths: ["frontend/**", "backend/**", "demo/**", "docs/feature-explorer*", "docs/assets/**", ".github/workflows/frontend.yml"]
 
 permissions:
   contents: read
@@ -51,6 +51,8 @@ jobs:
       - name: Wait for API health
         run: curl --fail --silent --retry 15 --retry-connrefused --retry-delay 1 http://127.0.0.1:8000/api/v1/health
       - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npm run test:docs
         working-directory: frontend
       - run: npm run test:e2e
         working-directory: frontend

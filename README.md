@@ -1,222 +1,213 @@
-# E-COM_Store
+<div align="center">
 
-A reusable, payment-free commerce application with a connected **customer storefront**, a
-**staff/owner admin panel**, and a **FastAPI backend**. Use the same application for drinks,
-clothing, home goods, or another physical-goods store, with a separate deployment and database
-for each business.
+![E-COM_Store — a storefront out front, a workspace behind it](docs/assets/banner.svg)
 
-**No online payment is requested or collected. An order status is not proof of payment.**
+**A connected storefront. A practical admin panel. One reusable commerce foundation.**
 
-## Start here
+[![React 19](https://img.shields.io/badge/React-19-242440?style=flat-square&logo=react&logoColor=61DAFB)](frontend/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-typed-242440?style=flat-square&logo=typescript&logoColor=3178C6)](frontend/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Python-242440?style=flat-square&logo=fastapi&logoColor=009688)](backend/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-production-242440?style=flat-square&logo=postgresql&logoColor=8AB8E6)](backend/README.md)
+[![Payments intentionally off](https://img.shields.io/badge/Online_payments-intentionally_off-5145cd?style=flat-square)](#scope-and-safety)
 
-- [Customer storefront features](#customer-storefront-features)
-- [Admin panel features](#admin-panel-features)
-- [Backend and security features](#backend-and-security-features)
-- [100-product general-store demo](#100-product-general-store-demo)
-- [Run locally](#run-locally)
-- [Testing and verification](#testing-and-verification)
-- [Limitations and production readiness](#limitations-and-production-readiness)
+[**Explore the interactive guide**](docs/feature-explorer.html) · [**Get started**](#run-locally) · [**All features**](docs/FEATURES.md) · [**Admin handbook**](frontend/ADMIN.md)
 
-### Branches
+</div>
 
-- **`feature/reusable-fastapi-store`**: reusable API, storefront, and admin implementation.
-  The original reusable checkpoint is `e7dc132`, without the 100-product general-store fixtures.
-- **`demo/general-store`**: extends that checkpoint with the isolated 100-product catalog,
-  local credited photos, demo runner, and demo-specific browser tests. This README describes
-  the complete demo-capable application; demo-only features are identified below.
-- **`main`** in **E-COM_Store**: the complete application and documentation, initially published
-  from `demo/general-store`. The original `Drinks` repository's `main` remains the earlier static
-  prototypes; publishing this new repository does not replace that branch.
+> **Interactive, in two places.** Expand the sections below directly on GitHub. For searchable
+> features, keyboard-operated stack tabs, an expandable project tree, and copyable commands,
+> clone/download the repository and open **[`docs/feature-explorer.html`](docs/feature-explorer.html)**
+> in a browser. It works offline, with no install or API server. GitHub shows HTML source rather
+> than running it; this link is not a deployed live site.
 
-Choose the branch you want before following its setup instructions. Switching branches does not
-isolate databases: each store still needs its own database, secret, cookie name, and hostname.
+## A look inside
 
-## Customer storefront features
+### 🛍️ The customer storefront
 
-### Design and navigation
+[![Lavender Everyday Market storefront with a live collection explorer](docs/assets/storefront-preview.webp)](docs/feature-explorer.html)
 
-- Responsive desktop, tablet, and mobile layouts with pale lavender, navy, and indigo styling.
-- Self-hosted **Space Grotesk** headings and **DM Sans** body text.
-- Split landing-page hero, collection section, store-approach section, and shopping instructions.
-- Interactive catalog visualization with real category counts, category selection, reset,
-  and a product preview that opens its details. Catalogs larger than 100 products show a labeled
-  snapshot rather than presenting partial counts as the full catalog.
-- Store name and currency read from the API; an optional frontend variable can override the
-  displayed brand name. The footer includes the configured contact-email link when available.
-- Keyboard-accessible dialogs with focus management, Escape-to-close where appropriate,
-  focus restoration, labeled controls, loading states, empty states, and actionable error messages.
+Search, explore, choose a variant, fill a bag, and submit a reviewed order. The pale lavender/navy
+interface uses self-hosted Space Grotesk and DM Sans, with responsive layouts and keyboard-aware dialogs.
 
-### Product discovery
+### 🧰 The staff & owner workspace
 
-- Browse live products from the backend, not a hardcoded frontend catalog.
-- Server-side product search and category filters, including an **All goods** reset.
-- Paginated collection with **12 products per page**, result counts, and Previous/Next controls.
-- Product cards with category, name, short attributes, starting price, photo, and availability.
-- Product detail dialogs with description, attributes, variant options, current price, and stock
-  availability. Exact stock counts are reserved for staff responses.
-- Variant selection before adding products with multiple options to the bag.
-- Disabled purchasing for unavailable products and variants.
-- Illustrative fallback artwork when a usable product photograph is unavailable.
-- On the demo branch, product-detail photo credits and links to source, license, and full attribution.
+[![Admin overview showing sample catalog counts, open orders, stock alerts, and workspace navigation](docs/assets/admin-preview.webp)](frontend/ADMIN.md)
 
-### Shopping bag and checkout
+Real operational counts, editable catalogs, versioned stock adjustments, and fulfillment workflows.
+This capture uses synthetic test-store data, not customer data. Storefront photo credits and
+screenshot provenance are in [`docs/assets/README.md`](docs/assets/README.md).
 
-- Server-backed session bag that survives page reloads while the session remains valid.
-- Add products, increase/decrease quantities, remove items, and review line totals and subtotal.
-- Guest shopping and signed-in shopping, with server-side guest/account cart merging at login.
-- Availability and quantity validation; carts do not reserve inventory before checkout.
-- Checkout with customer name, email, E.164 phone number, and optional order notes.
-- **Store pickup**, **domestic flat-fee shipping**, or **local delivery to configured postal codes**,
-  depending on the owner's settings. Address fields appear for shipping/delivery.
-- Server-generated review of items, tax, fulfillment fees, and final total before submission.
-- A reviewed-cart fingerprint prevents silently ordering changed quantities, details, or prices.
-- Order confirmation with reference, items, status, and amount breakdown.
-- Duplicate-order protection using idempotency keys. Uncertain submissions can be recovered after
-  a lost response, reload, or tab closure by retrying the same original details in the same session.
-- Cross-tab checkout serialization and a guard against bag edits while an order attempt is unresolved.
+## Feature explorer
 
-### Accounts and order tracking
+**Click any section to expand.** For the complete behavior, rules, and limitations, use the
+[detailed feature reference](docs/FEATURES.md).
 
-- Customer registration, email/password sign-in, and sign-out.
-- Signed-in account dialog with recent order history and individual order summaries.
-- Guest order lookup using the order reference and a private lookup key, without putting that key
-  in the URL or browser storage.
-- Downloadable guest order-details text file containing the reference and private lookup key.
-  Save it before closing the receipt; the application does not email it automatically.
-- Customer/guest cancellation of **pending** orders; stock is restored only once.
-- Staff and owner accounts also receive a link to the admin workspace from their account dialog.
+<details open>
+<summary><strong>🛍️ Storefront — from discovery to order tracking</strong></summary>
 
-## Admin panel features
+- **Discover:** live category visualization, category filters/reset, server-side search, counts,
+  and 12-product pagination. Catalogs over 100 products show a clearly labeled explorer snapshot.
+- **Choose:** product descriptions, photos/fallback artwork, attributes, variant options, starting
+  prices, availability, and disabled unavailable purchases.
+- **Bag:** server-backed session persistence, quantity controls, remove items, subtotal, stock
+  validation, and guest/account bag merging at login. A bag does not reserve stock.
+- **Checkout:** contact details, optional notes, enabled pickup/domestic shipping/local delivery,
+  server-reviewed items, tax, fees, and final totals. No payment is requested or collected.
+- **Retry safely:** quote-change detection, durable order idempotency, cross-tab locks, and recovery
+  of uncertain submissions using the original details and session.
+- **Accounts:** customer registration, sign-in/out, recent order history, and order summaries.
+- **Guest tracking:** private reference/key lookup, downloadable guest order details, and pending-order
+  cancellation. Private keys stay out of URLs and browser storage.
+- **Usability:** responsive layouts, labeled controls, loading/error/empty states, focus-managed
+  dialogs, keyboard navigation, and connection recovery.
 
-Open **`/admin`** on the storefront's origin. The admin application is lazy-loaded separately
-from the public storefront. Permissions are enforced by the API, not only by hidden buttons.
+</details>
 
-### Access and roles
+<details>
+<summary><strong>🧰 Admin panel — catalog, stock, orders, and owner controls</strong></summary>
 
-- **Customers:** shop and view their own orders; no admin access.
-- **Staff:** manage categories, products, variants, inventory, and orders.
-- **Owners** (the API's `admin` role): all staff capabilities plus store settings.
-- Staff/owner sign-in and sign-out, with no public privileged-account registration.
-- Owner accounts created through a secure CLI password prompt, not a default production password.
-- Access revalidation on focus, visibility changes, same-origin login/logout signals, and every
-  30 seconds while visible. Detected expired/revoked access clears private admin caches and editors.
-- Responsive workspace navigation, page headings, dialogs, feedback, and scrollable data tables.
+- **Access:** separate lazy-loaded `/admin`, staff/owner login, API-enforced permissions, CLI-created
+  owners, and access revalidation. No public privileged registration.
+- **Overview:** total/active products, open/pending orders, and active-variant low-stock alerts
+  (five or fewer units). These are operational counts, not sales/payment analytics.
+- **Categories:** create/edit names, slugs, descriptions and visibility; inactive categories stay
+  editable and recoverable while their products are hidden publicly.
+- **Products:** search/filter/page, edit description/category/slug, featured/active flags, flexible
+  `key=value` attributes, and up to 10 photo URLs. The current storefront shows the first photo.
+- **Variants:** SKU, name, price, options, opening stock, active state, and version-checked metadata
+  edits. Existing SKUs are read-only in the UI; stock changes use the dedicated adjustment flow.
+- **Inventory:** stock/SKU/version views, low-stock filters, signed adjustments with required reasons,
+  stale-write rejection, and durable idempotent retry/recovery across tabs and reloads.
+- **Orders:** status filtering, pagination, private contact/address/notes, item/SKU snapshots, totals,
+  fulfillment-compatible transitions, status-event timeline, and one-time stock restoration on cancellation.
+- **Owner settings:** name, description, email, country, timezone, currency, fixed tax and fee taxation,
+  pickup/shipping switches, shipping/delivery fees, and local-delivery postal codes.
 
-### Overview
+**Permissions:** customers shop and view their own orders; staff manage daily operations; owners
+also change store settings. Currency locks once variant prices exist. See [admin operations](frontend/ADMIN.md).
 
-- Total product records and active-product count.
-- Open-order count and orders awaiting confirmation.
-- Stock-alert count for active variants in active products/categories with **five or fewer units**.
-- Shortcuts to products, orders, and inventory, with operational reminders.
-- Counts reflect backend data; the panel does not invent revenue or payment analytics.
+</details>
 
-### Categories
+<details>
+<summary><strong>🔐 Backend & safety — authoritative, validated, and versioned</strong></summary>
 
-- List active and inactive categories.
-- Create and edit category name, slug, description, and active state.
-- Reactivate hidden categories instead of losing their records.
-- Inactive categories hide their products from the public catalog.
+- FastAPI/Pydantic contracts, SQLAlchemy storage, Alembic migrations, SQLite locally,
+  and PostgreSQL in production.
+- Catalog/variant APIs, API-level price/featured filters and profile edits, sessions, carts,
+  reviewed quotes, orders, private guest lookup, and protected management endpoints.
+- Argon2 passwords, HttpOnly session cookies, hashed session tokens, CSRF validation,
+  allowed hosts/origins, role checks, bounded request bodies, rate limits, and no-store API responses.
+- Transactional stock/order operations, PostgreSQL row locks, unique idempotency guards,
+  price/currency snapshots, adjustment records and status events.
+- Opaque retry metadata in localStorage; not customer contact details, passwords, session bearer
+  cookies, guest lookup keys, or stock-adjustment reason text.
+- Operator bootstrap/cleanup CLI, interactive OpenAPI docs, non-root Docker image,
+  automated tests, audits, and GitHub Actions workflow definitions.
 
-### Products and variants
+[Endpoint reference & deployment guide](backend/README.md)
 
-- Search product names/slugs, filter by category and active state, and paginate results.
-- Create and edit product name, slug, category, description, active state, and featured flag.
-- Store up to **10 HTTP(S) photo URLs** per product; the current storefront displays the first image.
-- Edit flexible product attributes as `key=value` pairs with duplicate/format validation.
-- Deactivate products while preserving records referenced by orders.
-- Create variants with name, unique SKU, price, opening stock, options, and active state.
-- Edit existing variant names, prices, options, and active state using version-checked writes.
-  Existing SKUs are read-only in the admin UI.
-- A product needs an active variant to appear in the public collection.
+</details>
 
-### Inventory
+<details>
+<summary><strong>📦 General-store demo — 100 products, 10 categories, credited photos</strong></summary>
 
-- View per-variant SKU, stock on hand, and record version within paginated product results.
-- Search product names/slugs, filter category/visibility, and show only low-stock variants.
-- Add or remove stock through a signed whole-number adjustment with a required reason.
-- Version checks reject stale adjustments instead of overwriting newer inventory.
-- Idempotency keys prevent a retried adjustment from being applied twice.
-- Durable retry recovery across reloads/tabs without storing the reason text in localStorage.
-- Explicit stale-version proof can retire a definitely unapplied intent; uncertain requests remain
-  guarded until recovered or reconciled. Stock is not silently reset by a product metadata edit.
+- **100 initial products**, ten each in Kitchen, Tableware, Home, Stationery, Garden, Accessories,
+  Sports, Technology, Personal Care, and Pantry.
+- One Standard variant per product, illustrative USD prices, and initial stock of 25.
+- **100 local content-hashed WebP images** with pinned Commons source, creator, license,
+  SHA-256 and modification metadata; no browsing-time Commons hotlinking.
+- Individual CC0/CC BY/CC BY-SA attribution on product details and `/photo-credits.html`.
+- Guarded offline import into an initially empty, separately named demo SQLite database.
+  Private import identity preserves later admin edits, extra products, prices and stock on restart.
+- Separate API **8004**, frontend **5176**, database, random secret/password, and cookie name.
+- Optional photo-collection, contact-sheet review and attribution-generation tools.
 
-### Orders
+**Sample merchandise only.** Photos are representative, not exact supplier offers or endorsements.
+[Demo setup & licenses](demo/README.md)
 
-- Paginated order list with status filter, reference, date, customer, fulfillment, and total.
-- Order details with private customer contact/address, notes, item/SKU snapshots, quantities,
-  tax, fulfillment fees, currency, total, and status-event timeline.
-- Fulfillment-compatible status transitions:
-  - Pickup: `pending → confirmed → processing → ready → completed`.
-  - Shipping/local delivery: `pending → confirmed → processing → dispatched → completed`.
-- Staff cancellation before dispatch/completion, with one-time inventory restoration.
-- Server validation of status transitions and recording of the acting account in status events.
+</details>
 
-### Owner-only store settings
+## Tech stack
 
-- Store name, description, contact email, country code, and timezone.
-- One currency per store: **USD, GBP, EUR, CAD, AUD, NZD, BDT, or INR**.
-  Currency cannot change after variant prices exist without an explicit migration.
-- Fixed tax rate and whether fulfillment fees are taxable. Unconfigured tax blocks checkout;
-  demo zero tax is not a legal tax determination.
-- Enable/disable pickup and domestic shipping; configure the flat shipping fee.
-- Configure local-delivery fee and eligible postal codes; an empty postal list disables delivery.
-- Blank contact-email/tax inputs preserve existing values in the current settings form.
+<div align="center">
 
-For detailed workflows and recovery guidance, see [the admin guide](frontend/ADMIN.md).
+![React](https://img.shields.io/badge/React-19-5145cd?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-5145cd?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-5145cd?style=for-the-badge&logo=vite&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11+-242440?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-242440?style=for-the-badge&logo=fastapi&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-production-242440?style=for-the-badge&logo=postgresql&logoColor=white)
 
-## Backend and security features
+</div>
 
-- **FastAPI**, **Pydantic**, **SQLAlchemy**, and **Alembic** with SQLite for local development
-  and PostgreSQL for production.
-- Generic category/product/variant models, flexible attributes/options, catalog pagination,
-  search, category/featured filters, and API-only minimum/maximum price filters.
-- Account/session APIs, including API-level profile updates, server-side carts, quotes,
-  payment-free orders, private guest lookup, and protected staff/owner endpoints.
-- Snapshot order pricing/currency/details, inventory mutation records, order status events,
-  transactional checkout, and PostgreSQL row locking for concurrent stock operations.
-- Argon2 password hashing, opaque HttpOnly session cookies, hashed session tokens at rest,
-  CSRF protection for writes, explicit allowed origins/hosts, and role-based authorization.
-- Request validation, bounded write bodies, database-backed write/login/lookup rate limits,
-  and `Cache-Control: no-store` API responses. Public reads also need production edge rate limiting.
-- Browser localStorage holds opaque checkout/inventory retry metadata, not customer contact details,
-  passwords, session bearer cookies, or guest lookup keys. CSRF tokens stay in memory.
-- CLI commands for local secret initialization, empty-store initialization, owner creation,
-  small sample seeding, and expired-session/rate-window cleanup.
-- Interactive API documentation at **`/docs`**, **`/redoc`**, and **`/openapi.json`**.
-- Non-root backend Docker image and GitHub Actions backend/frontend verification workflows.
+<details>
+<summary><strong>See what each layer uses</strong></summary>
 
-See [backend setup, endpoint reference, and deployment](backend/README.md) and
-[frontend architecture and checkout safety](frontend/README.md).
+- **Interfaces:** React, TypeScript, Vite, TanStack Query, Zod; self-hosted Space Grotesk + DM Sans.
+- **API/data:** Python, FastAPI, Pydantic, SQLAlchemy, Alembic, SQLite/PostgreSQL, Argon2.
+- **Verification:** Pytest/coverage, Vitest, Playwright, axe-core, Ruff, npm audit, pip-audit.
+- **Operations:** Docker, GitHub Actions, static frontend hosting, same-origin HTTPS `/api` proxy.
+- **This guide:** HTML, CSS, and vanilla JavaScript. No framework, CDN, tracking, or runtime dependency.
 
-## 100-product general-store demo
+</details>
 
-**Included on `main` and `demo/general-store` in E-COM_Store, separate from the reusable checkpoint.**
+## How it connects
 
-- Exactly **100 initial products**, **10 categories**, and **10 products per category**:
-  Kitchen, Tableware, Home, Stationery, Garden, Accessories, Sports, Technology, Personal Care,
-  and Pantry. Each starts with one Standard variant and sample USD pricing/stock.
-- **100 local, content-hashed WebP images** with pinned Commons source, creator, license,
-  modification notice, and SHA-256 metadata. No Commons hotlinking is needed while browsing.
-- CC0/CC BY/CC BY-SA image attribution on product details and **`/photo-credits.html`**.
-- A visible demonstration banner; prices, stock, and photography are examples, not supplier offers.
-- Guarded offline import: first import requires empty application tables in a separately named
-  SQLite demo database. Private import identity makes later imports no-ops, preserving normal
-  admin edits, added products, prices, visibility, and stock across restarts.
-- Separate loopback API on **8004**, storefront on **5176**, database, random secret/owner password,
-  and session-cookie name. The original development store on 8000/5173 is not overwritten.
-- Optional photo collection, manual-review contact sheets, and credits-page generation utilities.
+```mermaid
+flowchart LR
+    Shopper["🛍 Customer"] --> Storefront["React storefront"]
+    Operator["🧰 Staff / owner"] --> Admin["Lazy-loaded /admin"]
+    Storefront --> Proxy["Same-origin /api proxy"]
+    Admin --> Proxy
+    Proxy --> API["FastAPI · validation · CSRF · roles"]
+    API --> Rules["Quotes · orders · stock · idempotency"]
+    Rules --> Database[("SQLite locally / PostgreSQL in production")]
+```
 
-Read [the demo guide](demo/README.md) for import options, photo reuse conditions, and runtime details.
-Representative photos are not evidence of exact materials, specifications, or brand endorsement.
+One independent deployment/database per business. The app intentionally has **no payment gateway**.
+
+## Project tree
+
+<details open>
+<summary><strong>🌳 Expand the repository map</strong></summary>
+
+```text
+E-COM_Store/
+├── frontend/                    # Connected React application
+│   ├── src/
+│   │   ├── components/          # Discovery, bag, checkout, accounts, tracking
+│   │   ├── admin/               # Overview, catalog, stock, orders, settings
+│   │   └── lib/                 # API client, schemas, durable retry guards
+│   ├── public/demo-photos/      # 100 credited content-hashed images
+│   ├── tests/                  # Unit tests
+│   └── e2e*/                   # Storefront, admin, demo & guide browser tests
+├── backend/
+│   ├── app/                    # Routers, models, security, services, CLI
+│   ├── migrations/             # Alembic history
+│   ├── tests/                  # API, inventory and concurrency coverage
+│   └── Dockerfile              # Non-root API image
+├── demo/                       # Manifest, guarded import & loopback runner
+├── docs/
+│   ├── feature-explorer.html   # Open in a browser: interactive offline guide
+│   ├── feature-explorer.css    # Responsive visual presentation
+│   ├── feature-explorer.js     # Search, filters, tabs, tree & copy buttons
+│   ├── FEATURES.md             # Full technical feature reference
+│   └── assets/                 # Banner, previews & licensed local fonts
+├── .github/workflows/          # Backend and frontend checks
+└── README.md                   # You are here
+```
+
+Original static prototypes are preserved separately from the connected app. Databases, secrets,
+`.env`, dependency folders, build output, and private test artifacts are **not** shipped.
+
+</details>
 
 ## Run locally
 
-Requirements: **Python 3.11+**, **Node.js 24 LTS**, and npm. Commands below use Windows PowerShell;
-on macOS/Linux use `python3`, the virtual environment's `bin/python`, and `npm` instead of `npm.cmd`.
+**Python 3.11+ · Node.js 24 LTS · npm**. Windows PowerShell examples, from the repository root:
 
-### Option A: 100-product demo
-
-On `main` or `demo/general-store` in E-COM_Store, from the repository root, install dependencies once:
+<details>
+<summary><strong>1. Install dependencies once</strong></summary>
 
 ```powershell
 py -3.11 -m venv backend/.venv
@@ -224,13 +215,20 @@ backend\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
 npm.cmd ci --prefix frontend
 ```
 
-Start the demo API:
+On macOS/Linux, use `python3`, `backend/.venv/bin/python`, and `npm` instead of `npm.cmd`.
+
+</details>
+
+<details>
+<summary><strong>2. Start the demo API and storefront in separate terminals</strong></summary>
+
+**Terminal A — API:**
 
 ```powershell
 backend\.venv\Scripts\python.exe demo/serve.py
 ```
 
-In a second terminal:
+**Terminal B — storefront:**
 
 ```powershell
 Set-Location frontend
@@ -238,54 +236,53 @@ $env:STORE_API_TARGET = 'http://127.0.0.1:8004'
 npm.cmd run dev -- --host 127.0.0.1 --port 5176 --strictPort
 ```
 
-Open the [storefront](http://127.0.0.1:5176), [admin panel](http://127.0.0.1:5176/admin),
-[API docs](http://127.0.0.1:8004/docs), or [photo credits](http://127.0.0.1:5176/photo-credits.html).
-The runner creates the demo owner's credentials in **`demo/.local/access.json`**. Read that file
-privately to sign in; it is ignored by Git and must never be published. Pillow and internet access
-are needed only to regenerate photos, not to run the pinned demo.
+- [Storefront](http://127.0.0.1:5176) · [Admin](http://127.0.0.1:5176/admin)
+- [API docs](http://127.0.0.1:8004/docs) · [Photo credits](http://127.0.0.1:5176/photo-credits.html)
+- **Demo sign-in:** privately open the generated, ignored `demo/.local/access.json`.
+  Never publish that file. There is no shared default production password.
 
-### Option B: reusable development store
+For a store without fixtures: [backend bootstrap](backend/README.md) + [frontend setup](frontend/README.md).
+Owner creation uses `python -m app.cli create-admin` with a secure password prompt.
 
-Follow [backend quick start](backend/README.md#quick-start--windows-powershell), then
-[frontend quick start](frontend/README.md#run-locally).
+</details>
 
-- API: **http://127.0.0.1:8000**.
-- Storefront: **http://127.0.0.1:5173**.
-- Admin: **http://127.0.0.1:5173/admin**.
-- Use `seed-demo` only for the small development sample. For a real empty store, use
-  `python -m app.cli init-store --name "Your Store"` instead, then configure tax/fulfillment.
-- From `backend/` with its virtual environment active, create an owner with:
+<details>
+<summary><strong>3. Open the interactive documentation — no app server needed</strong></summary>
 
 ```powershell
-python -m app.cli create-admin --email owner@example.com --name "Store owner"
+Start-Process .\docs\feature-explorer.html
 ```
 
-The CLI securely prompts for the password. Public customer registration never grants staff access.
-Use the same hostname consistently; mixing `localhost` and `127.0.0.1` can break cookie behavior.
+Or double-click `docs/feature-explorer.html` after cloning/downloading. Search 24 feature groups,
+filter by storefront/admin/platform, change stack tabs, expand folders, and copy setup commands.
+No network, account access, analytics, or localStorage is used by the guide.
 
-## Testing and verification
+</details>
+
+## Verification
+
+[![Guide checked with Playwright](https://img.shields.io/badge/Guide-Playwright_checked-5145cd?style=flat-square&logo=playwright&logoColor=white)](frontend/e2e-docs/guide.spec.ts)
+[![Accessibility checks](https://img.shields.io/badge/Accessibility-automated_axe_checks-242440?style=flat-square)](frontend/e2e-docs/guide.spec.ts)
+
+<details>
+<summary><strong>🧪 Commands and verification scope</strong></summary>
 
 From `frontend/`:
 
 ```powershell
 npm.cmd test
 npm.cmd run build
-npm.cmd audit
 npx.cmd playwright install chromium
+npm.cmd run test:docs
 npm.cmd run test:admin
 npm.cmd run test:e2e
 npm.cmd run test:demo
 ```
 
-- `test:admin` starts an isolated temporary API/database on **8002** and frontend on **5175**.
-- `test:e2e` requires a **disposable seeded API on 8000**; it creates test accounts/orders and
-  changes carts. Never point it at a real customer store.
-- `test:demo` is available on demo-enabled branches and checks all 100 images, all nine collection pages,
-  category counts, filters, credits, automated accessibility, and responsive layouts.
-- Set `$env:STOREFRONT_TEST_PREVIEW = '1'` after building to exercise the production storefront/demo
-  bundle, with no conflicting Vite server already running on the suite's port.
-- Run browser suites sequentially with their defaults. If running concurrently, give each a
-  different `--output=artifacts/<suite-name>` directory to avoid shared Playwright artifact cleanup.
+`test:docs` is offline and checks search/filter/reset, stack tabs and keyboard behavior, folder
+expansion, command copying, no-script fallback, axe accessibility, and 320–1440px layouts.
+`test:admin` starts an isolated temporary database/API. `test:e2e` needs a **disposable seeded API
+on 8000**, not a real customer store. Use separate output directories if running suites concurrently.
 
 From `backend/` with its virtual environment active:
 
@@ -296,53 +293,40 @@ python -m pytest --cov --cov-report=term-missing
 python -m pip_audit -r requirements.txt
 ```
 
-On the demo branch, also check its Python utilities from `backend/`:
+The implementation baseline recorded **64 backend passes**, **3 local PostgreSQL skips**,
+**94.57% application coverage**, **23 frontend unit passes**, and **8 admin + 14 storefront + 3 demo
+browser passes**. These are recorded local results, not a live CI-status claim. PostgreSQL race
+tests need a disposable PostgreSQL database. Automated axe checks do not replace manual review.
 
-```powershell
-python -m ruff check --config pyproject.toml ../demo
-python -m ruff format --check --config pyproject.toml ../demo
-```
+</details>
 
-Latest local implementation verification: **64 backend tests passed**, **3 PostgreSQL-only tests
-skipped**, **94.57% backend application coverage**, **23 frontend unit tests passed**, and browser
-suites of **8 admin + 14 storefront + 3 demo tests passed**. Build, lint, and dependency audits passed.
-These are local results, not a claim that remote CI has already passed. PostgreSQL concurrency tests
-need a disposable PostgreSQL database; GitHub Actions provisions PostgreSQL 17.
-Automated accessibility checks do not replace manual keyboard/screen-reader review.
+## Scope and safety
 
-## Limitations and production readiness
+> **Payment-free by design.** An order status is not proof of payment. Sample prices, stock,
+> zero tax, and representative photographs are not production configuration or supplier offers.
 
-Not currently implemented:
+<details>
+<summary><strong>Read the boundaries before launching a real store</strong></summary>
 
-- Online payments, refunds, invoices, subscriptions, or payment reconciliation.
-- Public staff registration, staff-user management UI, password recovery, or email verification.
-- Transactional email/SMS, saved address book, customer profile-editing UI, or automatic receipt email.
-- Product reviews, wishlists, discount/coupon workflows, or an image-upload/media-storage service.
-- Carrier labels/tracking, calculated shipping rates, advanced US destination tax, or regulated-goods
-  compliance such as alcohol age verification/licensing.
-- Multi-tenant marketplaces, shared cross-store databases, digital downloads, or currency conversion.
+Not included: payments/refunds, staff-user management UI, password recovery/email verification,
+transactional email/SMS, wishlists/reviews/coupons, uploaded-media storage, carrier tracking,
+advanced destination tax, regulated-goods compliance, or a shared multi-tenant marketplace.
 
-Before public launch, provision a separate production PostgreSQL database and persistent secret,
-serve HTTPS, reverse-proxy `/api` on the storefront's origin, configure allowed hosts/origins,
-run migrations, set correct tax/fulfillment, replace sample content, and establish monitoring,
-edge rate limits, security headers, and restore-tested backups. Checkout/inventory recovery needs
-a secure context, working browser storage, and Web Locks. Vite preview and the loopback SQLite
-demo runner are not production servers.
+Production needs independent PostgreSQL storage/secrets/cookies/domains, HTTPS, a same-origin API
+proxy, correct tax/fulfillment, edge limits, monitoring, migrations and restore-tested backups.
+The SQLite demo runner and Vite preview are not production servers. Follow individual photo licenses.
 
-Follow individual photo licenses and verify non-copyright restrictions before commercial reuse.
-Sample zero tax, prices, stock, and representative photos are **not production configuration**.
+</details>
 
-## Repository guide
+### Pick your starting point
 
-- [`frontend/`](frontend/): connected storefront, admin application, unit tests, and browser tests.
-- [`frontend/ADMIN.md`](frontend/ADMIN.md): owner bootstrap, permissions, and administration guide.
-- [`backend/`](backend/): FastAPI app, migrations, CLI, tests, and deployment instructions.
-- [`demo/`](demo/): demo-branch catalog manifest, importer, local runner, and photo-source utilities.
-- [Implementation record](docs/superpowers/plans/2026-10-25-admin-and-general-store.md): scope,
-  decisions, review fixes, and verification evidence.
-- Existing `Index.html`, root `utility.js`/`styles.css`, and `showcase-design/` are preserved static
-  prototypes, not entry points to the connected application.
-- The unfinished Django attempt remains a local ignored archive, not part of this implementation.
+- **`main` / `demo/general-store`:** complete app, interactive docs, and 100-product sample.
+- **`feature/reusable-fastapi-store`:** reusable implementation checkpoint `e7dc132`, without the
+  general-store fixtures or these later documentation additions.
+- The original `Drinks` repository is unchanged by this documentation publication.
 
-Local databases, `.env` files, generated owner credentials, dependency directories, build output,
-and browser-test artifacts are excluded from Git. Do not publish them.
+---
+
+[Interactive guide](docs/feature-explorer.html) · [Full feature reference](docs/FEATURES.md) ·
+[Storefront guide](frontend/README.md) · [Admin handbook](frontend/ADMIN.md) ·
+[API & deployment](backend/README.md) · [Demo & photo licenses](demo/README.md)

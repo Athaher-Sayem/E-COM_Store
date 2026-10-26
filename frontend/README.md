@@ -8,6 +8,10 @@ The original root HTML/CSS/JS prototypes are not used or modified.
 The staff/owner workspace is at **`/admin`**. See [`ADMIN.md`](ADMIN.md) for bootstrap, permissions,
 catalog/inventory/order workflows, and isolated browser tests.
 
+For the visual project tour, open [`../docs/feature-explorer.html`](../docs/feature-explorer.html)
+directly in a browser. It is an offline documentation page, not a live storefront or admin session.
+The complete feature reference is in [`../docs/FEATURES.md`](../docs/FEATURES.md).
+
 ## Run locally
 
 Use Node.js **24 LTS** (the build also runs on supported newer Node releases).
@@ -37,13 +41,18 @@ npm.cmd run build
 npm.cmd audit
 npx.cmd playwright install chromium
 npm.cmd run test:e2e
+npm.cmd run test:docs
 ```
 
-Browser tests need a **disposable, seeded demo API** on port 8000. They create test accounts/orders,
+Storefront browser tests (`test:e2e`) need a **disposable, seeded demo API** on port 8000.
+They create test accounts/orders,
 modify test bags, and cancel successful test orders. Never run them against a real store.
 Unit tests do not require the API. Browser tests include lost checkout responses, denied retries,
 cross-tab recovery, stale quotes, accounts, failure/empty states, axe accessibility checks, focus,
 and overflow at 320, 390, 768, 1024, and 1440px.
+
+`test:docs` needs no API or web server. It opens the local guide file and verifies its interactive
+controls, clipboard success/failure handling, offline/no-script fallback, accessibility, and layouts.
 
 To exercise the production bundle locally after building:
 

@@ -24,6 +24,7 @@ test('administration requires a staff account and staff cannot edit owner settin
 test('owner creates categories, products, variants and changes inventory safely', async ({ page }, testInfo) => {
   await login(page);
   await expect(page.getByRole('heading', { name: 'Store overview' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Catalog products/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('overview.png'), fullPage: true });
   await page.getByRole('button', { name: 'Categories', exact: true }).click();
   await page.getByRole('button', { name: 'New category' }).click();

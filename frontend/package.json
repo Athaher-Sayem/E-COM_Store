@@ -11,6 +11,7 @@
     "test:e2e": "playwright test",
     "test:admin": "playwright test --config playwright.admin.config.ts",
     "test:demo": "playwright test --config playwright.demo.config.ts",
+    "test:docs": "playwright test --config playwright.docs.config.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
