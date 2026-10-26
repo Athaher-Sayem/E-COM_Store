@@ -1,6 +1,7 @@
 # 100-product general-store example
 
-This branch, **`demo/general-store`**, starts from reusable backend/storefront/admin checkpoint
+The demo, included on **`main`** and **`demo/general-store`** in E-COM_Store, starts from reusable
+backend/storefront/admin checkpoint
 **`e7dc132`** on `feature/reusable-fastapi-store`. Keep that base branch for stores without fixtures.
 The original prototypes and existing store database are unchanged. See the root
 [feature overview](../README.md) for the available storefront and admin capabilities.

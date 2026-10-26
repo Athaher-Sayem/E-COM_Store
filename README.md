@@ -1,4 +1,4 @@
-# Reusable Store
+# E-COM_Store
 
 A reusable, payment-free commerce application with a connected **customer storefront**, a
 **staff/owner admin panel**, and a **FastAPI backend**. Use the same application for drinks,
@@ -23,8 +23,10 @@ for each business.
   The original reusable checkpoint is `e7dc132`, without the 100-product general-store fixtures.
 - **`demo/general-store`**: extends that checkpoint with the isolated 100-product catalog,
   local credited photos, demo runner, and demo-specific browser tests. This README describes
-  the application on that branch; demo-only features are identified below.
-- **`main`**: the earlier static prototypes; it is not the connected application's branch.
+  the complete demo-capable application; demo-only features are identified below.
+- **`main`** in **E-COM_Store**: the complete application and documentation, initially published
+  from `demo/general-store`. The original `Drinks` repository's `main` remains the earlier static
+  prototypes; publishing this new repository does not replace that branch.
 
 Choose the branch you want before following its setup instructions. Switching branches does not
 isolate databases: each store still needs its own database, secret, cookie name, and hostname.
@@ -188,7 +190,7 @@ See [backend setup, endpoint reference, and deployment](backend/README.md) and
 
 ## 100-product general-store demo
 
-**Available on `demo/general-store`, separate from the reusable checkpoint.**
+**Included on `main` and `demo/general-store` in E-COM_Store, separate from the reusable checkpoint.**
 
 - Exactly **100 initial products**, **10 categories**, and **10 products per category**:
   Kitchen, Tableware, Home, Stationery, Garden, Accessories, Sports, Technology, Personal Care,
@@ -214,7 +216,7 @@ on macOS/Linux use `python3`, the virtual environment's `bin/python`, and `npm` 
 
 ### Option A: 100-product demo
 
-On `demo/general-store`, from the repository root, install dependencies once:
+On `main` or `demo/general-store` in E-COM_Store, from the repository root, install dependencies once:
 
 ```powershell
 py -3.11 -m venv backend/.venv
@@ -278,7 +280,7 @@ npm.cmd run test:demo
 - `test:admin` starts an isolated temporary API/database on **8002** and frontend on **5175**.
 - `test:e2e` requires a **disposable seeded API on 8000**; it creates test accounts/orders and
   changes carts. Never point it at a real customer store.
-- `test:demo` is demo-branch-only and checks all 100 images, all nine collection pages,
+- `test:demo` is available on demo-enabled branches and checks all 100 images, all nine collection pages,
   category counts, filters, credits, automated accessibility, and responsive layouts.
 - Set `$env:STOREFRONT_TEST_PREVIEW = '1'` after building to exercise the production storefront/demo
   bundle, with no conflicting Vite server already running on the suite's port.
